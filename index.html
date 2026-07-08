@@ -719,9 +719,9 @@ document.addEventListener('keydown',function(e){
         <h3 id="resultTitle">—</h3>
         <p id="resultText">—</p>
         <div class="quiz-cta">
-          <a class="btn btn-primary" href="#contact">Обсудить проект →</a>
-          <button id="quizRestart" type="button">Пройти заново</button>
-        </div>
+  <a class="btn btn-primary" id="quizTelegram" href="#contact" target="_blank" rel="noopener">Отправить в Telegram →</a>
+  <button id="quizRestart" type="button">Пройти заново</button>
+</div>
       </div>
     </div>
   </div>
@@ -867,30 +867,66 @@ document.addEventListener('keydown',function(e){
 (function(){
   var steps = document.querySelectorAll('.quiz-step');
   var dots = document.querySelectorAll('.quiz-progress .dot');
-  var answers = {};
+  var answers = {};       // числовые ответы (для расчёта пакета)
+  var answersText = {};   // текст ответов (для сообщения)
+
+  // ⬇️ ТВОЙ логин в Telegram (без @)
+  var TG_USERNAME = 'Karapetyan_Narek_Official';
+
   var packages = {
     site:{ title:'Пакет «Сайт» — от 25 000 ₽', text:'Стартуйте с сайта на Tilda — быстро выйти в интернет и начать собирать первые обращения.' },
     ads:{ title:'Пакет «Сайт + реклама» — от 45 000 ₽', text:'Сайт и настройка Яндекс Директа — чтобы заявки пошли уже в первые недели.' },
     full:{ title:'«Полный запуск» — от 65 000 ₽', text:'Сайт, реклама и AI-баннеры с видео — весь комплект без лишней головной боли.' }
   };
+
+  // Вопросы (для красивого сообщения)
+  var questions = {
+    '1':'Что уже есть у бизнеса',
+    '2':'Главная цель',
+    '3':'Бюджет на старт'
+  };
+
   function showStep(i){
     steps.forEach(function(s){ s.hidden = parseInt(s.dataset.step)!==i; });
     dots.forEach(function(d){ d.classList.toggle('active', parseInt(d.dataset.dot)<=i); });
   }
-  function result(){
+
+  function buildResult(){
     var a1=answers['1'], a3=answers['3'];
     var key = a1===2 ? 'full' : a1===1 ? (a3===2?'full':'ads') : (a3===0?'site':a3===1?'ads':'full');
     document.getElementById('resultTitle').textContent = packages[key].title;
     document.getElementById('resultText').textContent = packages[key].text;
+
+    // === Собираем сообщение для Telegram ===
+    var msg = 'Здравствуйте! Прошёл квиз на сайте 👋\n\n';
+    msg += '📋 Мои ответы:\n';
+    Object.keys(questions).forEach(function(q){
+      if(answersText[q]){
+        msg += '• ' + questions[q] + ': ' + answersText[q] + '\n';
+      }
+    });
+    msg += '\n✅ Рекомендованный пакет: ' + packages[key].title + '\n\n';
+    msg += 'Расскажите, с чего начать?';
+
+    // Формируем ссылку на Telegram с готовым текстом
+    var tgLink = 'https://t.me/' + TG_USERNAME + '?text=' + encodeURIComponent(msg);
+    document.getElementById('quizTelegram').setAttribute('href', tgLink);
   }
+
   document.querySelectorAll('.quiz-opt').forEach(function(btn){
     btn.addEventListener('click', function(){
-      answers[btn.dataset.q] = parseInt(btn.dataset.v);
-      var next = parseInt(btn.dataset.q);
-      if(next<3){ showStep(next); } else { result(); showStep(3); }
+      var q = btn.dataset.q;
+      answers[q] = parseInt(btn.dataset.v);
+      answersText[q] = btn.textContent.trim();   // запоминаем текст кнопки
+      var next = parseInt(q);
+      if(next<3){ showStep(next); } else { buildResult(); showStep(3); }
     });
   });
-  document.getElementById('quizRestart').addEventListener('click', function(){ answers={}; showStep(0); });
+
+  document.getElementById('quizRestart').addEventListener('click', function(){
+    answers={}; answersText={}; showStep(0);
+  });
+
   showStep(0);
 })();
 </script>
