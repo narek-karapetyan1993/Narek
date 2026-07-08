@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Нарэк Карапетян — сайты, реклама, AI-креативы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D0D12;
+    --surface:#16161E;
+    --surface2:#1E1E28;
+    --border:rgba(255,255,255,0.08);
+    --text:#F0EEF8;
+    --muted:#8A8799;
+    --flame:#FF4D2E;
+    --amber:#FFB740;
+    --teal:#2DD4BF;
+    --r:16px;
+    --r-sm:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+
+  /* NOISE GRAIN */
+  body::before{
+    content:'';position:fixed;inset:0;pointer-events:none;z-index:999;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity:.35;
+  }
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+
+  h1,h2{font-family:'Syne',sans-serif;font-weight:800;line-height:1.0;}
+  h3{font-family:'Syne',sans-serif;font-weight:700;}
+  .mono{font-family:'Space Mono',monospace;}
+
+  .tag{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    background:rgba(255,255,255,0.06);border:1px solid var(--border);
+    padding:5px 12px;border-radius:999px;color:var(--muted);
+  }
+  .tag.accent{background:rgba(255,77,46,0.12);border-color:rgba(255,77,46,0.3);color:var(--flame);}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.02em;
+    padding:14px 24px;border-radius:var(--r-sm);
+    border:1px solid transparent;
+    transition:all .2s ease;cursor:pointer;text-decoration:none;
+  }
+  .btn-primary{background:var(--flame);color:#fff;border-color:var(--flame);}
+  .btn-primary:hover{background:#ff6347;box-shadow:0 0 28px rgba(255,77,46,.4);}
+  .btn-ghost{background:rgba(255,255,255,.06);color:var(--text);border-color:var(--border);}
+  .btn-ghost:hover{background:rgba(255,255,255,.11);}
+  .btn:focus-visible{outline:2px solid var(--teal);outline-offset:3px;}
+
+  /* NAV */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(13,13,18,0.75);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:1120px;margin:0 auto;}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;}
+  .logo em{font-style:normal;color:var(--flame);}
+
+  /* MARQUEE */
+  .marquee{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:13px 0;background:var(--surface);}
+  .marquee-track{display:inline-flex;gap:0;white-space:nowrap;animation:scroll-left 28s linear infinite;}
+  .marquee-item{
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);padding:0 36px;border-right:1px solid var(--border);
+  }
+  .marquee-item.hi{color:var(--flame);}
+  @keyframes scroll-left{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @media(prefers-reduced-motion:reduce){.marquee-track{animation:none;}}
+
+  /* HERO */
+  .hero{padding:100px 0 80px;position:relative;overflow:hidden;}
+  .hero-glow{
+    position:absolute;top:-160px;right:-180px;width:600px;height:600px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,77,46,.18) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .hero-glow2{
+    position:absolute;bottom:-200px;left:-120px;width:500px;height:500px;border-radius:50%;
+    background:radial-gradient(circle,rgba(45,212,191,.10) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .hero-badge{margin-bottom:28px;}
+  .hero h1{font-size:clamp(44px,7.5vw,96px);margin-bottom:24px;}
+  .hero h1 .hi{
+    background:linear-gradient(135deg,var(--flame),var(--amber));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .hero-lead{font-size:18px;color:var(--muted);max-width:52ch;margin-bottom:40px;line-height:1.7;}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:72px;}
+
+  /* Cards strip */
+  .hero-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .hero-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+    padding:24px;position:relative;overflow:hidden;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .hero-card:hover{border-color:rgba(255,77,46,.35);transform:translateY(-3px);}
+  .hero-card::before{
+    content:'';position:absolute;inset:0;border-radius:var(--r);
+    background:linear-gradient(135deg,rgba(255,77,46,.07) 0%,transparent 60%);
+    opacity:0;transition:opacity .2s;
+  }
+  .hero-card:hover::before{opacity:1;}
+  .hero-card .icon{font-size:28px;margin-bottom:12px;}
+  .hero-card h3{font-size:16px;margin-bottom:6px;}
+  .hero-card p{font-size:14px;color:var(--muted);}
+
+  /* SECTION */
+  section{padding:100px 0;}
+  .section-label{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+  .section-head h2{font-size:clamp(28px,4vw,48px);margin-bottom:16px;}
+  .section-head p{color:var(--muted);max-width:52ch;font-size:17px;}
+  .section-head{margin-bottom:56px;}
+
+  /* SERVICES */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .service{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+    padding:36px 30px;transition:border-color .2s,transform .2s;
+  }
+  .service:hover{border-color:rgba(255,77,46,.4);transform:translateY(-4px);}
+  .service .s-num{font-family:'Space Mono',monospace;font-size:11px;color:var(--flame);letter-spacing:.1em;margin-bottom:20px;display:block;}
+  .service h3{font-size:22px;margin-bottom:12px;}
+  .service p{color:var(--muted);font-size:15px;line-height:1.65;}
+
+  /* PROCESS */
+  .process{background:var(--surface);border-radius:24px;padding:72px;}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+  .steps::before{
+    content:'';position:absolute;top:26px;left:10%;right:10%;height:1px;
+    background:linear-gradient(90deg,transparent,var(--flame),transparent);
+  }
+  .step{text-align:center;padding:0 16px;}
+  .step .num{
+    width:52px;height:52px;border-radius:50%;
+    background:linear-gradient(135deg,var(--flame),var(--amber));
+    display:flex;align-items:center;justify-content:center;margin:0 auto 20px;
+    font-family:'Space Mono',monospace;font-weight:700;font-size:14px;color:#fff;
+    position:relative;z-index:1;
+  }
+  .step h3{font-size:17px;margin-bottom:8px;}
+  .step p{font-size:14px;color:var(--muted);}
+
+  /* PACKAGES */
+  .pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;}
+  .pack{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+    padding:32px 28px;display:flex;flex-direction:column;gap:16px;
+    transition:border-color .2s,transform .2s;
+  }
+  .pack:hover{border-color:rgba(255,183,64,.3);transform:translateY(-3px);}
+  .pack.featured{
+    background:linear-gradient(160deg,#1e1420 0%,#1a1018 100%);
+    border-color:rgba(255,77,46,.5);
+    box-shadow:0 0 60px rgba(255,77,46,.12);
+    transform:translateY(-8px);
+  }
+  .pack.featured:hover{transform:translateY(-12px);}
+  .featured-badge{
+    background:var(--flame);color:#fff;font-family:'Space Mono',monospace;
+    font-size:11px;letter-spacing:.08em;padding:5px 12px;border-radius:999px;
+    display:inline-block;margin-bottom:4px;
+  }
+  .pack h3{font-size:22px;}
+  .pack .price{
+    font-family:'Syne',sans-serif;font-weight:800;font-size:36px;
+    background:linear-gradient(135deg,var(--text),var(--muted));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .pack.featured .price{
+    background:linear-gradient(135deg,var(--flame),var(--amber));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .pack-divider{height:1px;background:var(--border);}
+  .pack ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .pack ul li{font-size:14px;color:var(--muted);display:flex;gap:10px;align-items:flex-start;}
+  .pack ul li::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0;}
+  .pack .btn{margin-top:4px;width:100%;justify-content:center;}
+
+  /* QUIZ */
+  .quiz-wrap{
+    background:var(--surface);border:1px solid var(--border);border-radius:24px;
+    padding:56px;max-width:680px;margin:0 auto;
+  }
+  .quiz-progress{display:flex;gap:6px;margin-bottom:36px;}
+  .quiz-progress .dot{flex:1;height:4px;background:var(--surface2);border-radius:4px;transition:background .3s;}
+  .quiz-progress .dot.active{background:var(--flame);}
+  .quiz-q{font-family:'Syne',sans-serif;font-weight:700;font-size:24px;margin-bottom:28px;line-height:1.2;}
+  .quiz-options{display:flex;flex-direction:column;gap:12px;}
+  .quiz-opt{
+    text-align:left;padding:16px 20px;
+    background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);
+    color:var(--text);font-family:'Inter',sans-serif;font-size:15px;
+    cursor:pointer;transition:all .18s ease;
+  }
+  .quiz-opt:hover{background:rgba(255,77,46,.1);border-color:rgba(255,77,46,.4);color:#fff;transform:translateX(6px);}
+  .quiz-opt:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+  .quiz-result .res-eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--flame);margin-bottom:10px;display:block;}
+  .quiz-result h3{font-family:'Syne',sans-serif;font-size:28px;margin-bottom:12px;}
+  .quiz-result p{color:var(--muted);margin-bottom:28px;font-size:16px;}
+  .quiz-cta{display:flex;gap:14px;flex-wrap:wrap;}
+  #quizRestart{font-family:'Space Mono',monospace;font-size:12px;background:none;border:none;color:var(--muted);cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:4px;}
+  #quizRestart:hover{color:var(--text);}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:320px 1fr;gap:56px;align-items:start;}
+  .about-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+    padding:32px;text-align:center;
+  }
+  .avatar{
+    width:160px;height:160px;border-radius:50%;
+    object-fit:cover;object-position:center top;
+    margin:0 auto 16px;display:block;
+    border:3px solid rgba(255,77,46,0.4);
+    box-shadow:0 0 0 6px rgba(255,77,46,0.08);
+  }
+  .about-card h3{font-size:20px;margin-bottom:6px;}
+  .about-card .role{color:var(--muted);font-size:14px;margin-bottom:20px;}
+  .about-skills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .about-text p{color:var(--muted);font-size:16px;line-height:1.75;margin-bottom:16px;}
+  .about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:20px;text-align:center;}
+  .stat-card b{display:block;font-family:'Syne',sans-serif;font-size:28px;margin-bottom:4px;}
+  .stat-card span{font-size:12px;color:var(--muted);}
+
+  /* CONTACT */
+  .contact-inner{
+    background:linear-gradient(135deg,var(--surface) 0%,#0f0f16 100%);
+    border:1px solid var(--border);border-radius:24px;padding:72px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:40px;
+    position:relative;overflow:hidden;
+  }
+  .contact-inner::before{
+    content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,77,46,.15) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .contact-text .tag{margin-bottom:16px;}
+  .contact-text h2{font-size:clamp(28px,3.5vw,44px);margin-bottom:12px;}
+  .contact-text p{color:var(--muted);max-width:40ch;}
+  .contact-links{display:flex;gap:14px;flex-wrap:wrap;position:relative;z-index:1;}
+
+  footer{padding:24px;text-align:center;font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);border-top:1px solid var(--border);}
+
+  /* SCROLL ANIMATIONS */
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal.visible{opacity:1;transform:translateY(0);}
+  .reveal-left{
+    opacity:0;
+    transform:translateX(-24px);
+    transition:opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal-left.visible{opacity:1;transform:translateX(0);}
+
+  /* HERO GLOW pulse */
+  .hero-glow{animation:pulse-glow 6s ease-in-out infinite alternate;}
+  .hero-glow2{animation:pulse-glow2 8s ease-in-out infinite alternate;}
+  @keyframes pulse-glow{
+    0%{transform:scale(1);opacity:1;}
+    100%{transform:scale(1.18);opacity:.7;}
+  }
+  @keyframes pulse-glow2{
+    0%{transform:scale(1);opacity:1;}
+    100%{transform:scale(1.12);opacity:.6;}
+  }
+
+  /* STEP numbers count-up shimmer */
+  .step .num{animation:shimmer-in .5s ease both;}
+  .step:nth-child(1) .num{animation-delay:.1s;}
+  .step:nth-child(2) .num{animation-delay:.2s;}
+  .step:nth-child(3) .num{animation-delay:.3s;}
+  .step:nth-child(4) .num{animation-delay:.4s;}
+  @keyframes shimmer-in{
+    0%{box-shadow:0 0 0 0 rgba(255,77,46,.6);}
+    60%{box-shadow:0 0 0 14px rgba(255,77,46,0);}
+    100%{box-shadow:0 0 0 0 rgba(255,77,46,0);}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .reveal,.reveal-left{transition:none;opacity:1;transform:none;}
+    .hero-glow,.hero-glow2{animation:none;}
+    .step .num{animation:none;}
+  }
+
+  /* PORTFOLIO */
+  .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .port-card{
+    border-radius:var(--r);overflow:hidden;
+    border:1px solid var(--border);
+    background:var(--surface);
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    cursor:pointer;
+  }
+  .port-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+    border-color:rgba(255,77,46,.4);
+  }
+  .port-screen{
+    width:100%;aspect-ratio:16/10;
+    overflow:hidden;position:relative;
+  }
+  .port-screen iframe{
+    width:200%;height:200%;
+    border:none;
+    transform:scale(0.5);
+    transform-origin:top left;
+    pointer-events:none;
+  }
+  .port-info{padding:18px 20px;}
+  .port-info .port-tag{
+    font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--flame);margin-bottom:6px;display:block;
+  }
+  .port-info h3{font-size:17px;margin-bottom:4px;}
+  .port-info p{font-size:13px;color:var(--muted);}
+
+  @media(max-width:900px){
+    .portfolio-grid{grid-template-columns:1fr;}
+    .hero-cards{grid-template-columns:1fr;}
+    .services-grid{grid-template-columns:1fr;}
+    .process{padding:40px 24px;}
+    .steps{grid-template-columns:repeat(2,1fr);gap:32px;}
+    .steps::before{display:none;}
+    .pack-grid{grid-template-columns:1fr;}
+    .pack.featured{transform:none;}
+    .pack.featured:hover{transform:translateY(-4px);}
+    .about-grid{grid-template-columns:1fr;}
+    .about-stats{grid-template-columns:repeat(3,1fr);}
+    .quiz-wrap{padding:32px 24px;}
+    .contact-inner{padding:40px 28px;flex-direction:column;align-items:flex-start;}
+  }
+
+  /* ==== МОДАЛКА ПОРТФОЛИО ==== */
+.port-card { cursor:pointer; }
+.port-open-btn{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  opacity:0; transition:.3s; background:rgba(10,12,20,.55);
+}
+.port-screen{ position:relative; }
+.port-card:hover .port-open-btn{ opacity:1; }
+.port-open-btn span{
+  background:#4d6bff; color:#fff; padding:14px 30px; border-radius:40px;
+  font-weight:700; font-size:15px; transform:translateY(10px); transition:.3s;
+}
+.port-card:hover .port-open-btn span{ transform:translateY(0); }
+
+.modal{
+  position:fixed; inset:0; z-index:9999; background:rgba(5,7,12,.85);
+  backdrop-filter:blur(8px); display:none; padding:30px;
+  align-items:center; justify-content:center;
+}
+.modal.open{ display:flex; animation:fadeIn .3s ease; }
+@keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+.modal-box{
+  width:100%; max-width:1000px; height:88vh; background:#0e1116;
+  border-radius:16px; overflow:hidden; position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,.6); animation:slideUp .4s ease;
+}
+@keyframes slideUp{ from{transform:translateY(30px);opacity:0} to{transform:translateY(0);opacity:1} }
+.modal-bar{
+  height:46px; background:#181c24; display:flex; align-items:center;
+  padding:0 16px; gap:8px; border-bottom:1px solid rgba(255,255,255,.08);
+}
+.modal-bar .dot{ width:12px; height:12px; border-radius:50%; }
+.modal-bar .url{
+  flex:1; text-align:center; color:#8a93a3; font-size:13px;
+  background:#0e1116; margin:0 60px; padding:6px; border-radius:6px;
+}
+.modal-close{
+  cursor:pointer; color:#fff; background:#e5484d; border:none;
+  width:30px; height:30px; border-radius:50%; font-size:16px; line-height:1;
+}
+.modal-frame{ width:100%; height:calc(88vh - 46px); border:none; background:#fff; }
+</style>
+</head>
+
+<script>
+const SITES = {
+coffee:{url:"aromat-coffee.ru",html:`
+<div style="font-family:Georgia,serif;color:#f5e6d3;background:#1a0f08;">
+<div style="min-height:100vh;background:linear-gradient(135deg,#3a2618,#1a0f08);display:flex;flex-direction:column;justify-content:center;padding:70px;">
+<div style="letter-spacing:4px;color:#d4a05f;margin-bottom:20px;">COFFEE · ROSTOV</div>
+<div style="font-size:70px;font-weight:bold;line-height:1;margin-bottom:24px;">Аромат,<br>который будит</div>
+<div style="font-size:22px;color:#c9b8a3;max-width:500px;margin-bottom:36px;">Свежая обжарка каждое утро. Заберите свой стакан за 5 минут.</div>
+<div style="background:#d4a05f;color:#1a0f08;padding:18px 44px;border-radius:6px;font-weight:bold;font-size:18px;width:fit-content;">Заказать кофе →</div></div>
+<div style="padding:70px;background:#22140b;"><div style="font-size:40px;color:#d4a05f;margin-bottom:40px;">Наше меню</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+<div style="background:#2e1c11;padding:30px;border-radius:12px;"><b style="font-size:24px;">Капучино</b><div style="color:#c9b8a3;margin-top:8px;">Нежная пенка · 180₽</div></div>
+<div style="background:#2e1c11;padding:30px;border-radius:12px;"><b style="font-size:24px;">Раф</b><div style="color:#c9b8a3;margin-top:8px;">Сливочный вкус · 220₽</div></div>
+<div style="background:#2e1c11;padding:30px;border-radius:12px;"><b style="font-size:24px;">Лавандовый</b><div style="color:#c9b8a3;margin-top:8px;">Хит сезона · 240₽</div></div>
+<div style="background:#2e1c11;padding:30px;border-radius:12px;"><b style="font-size:24px;">Эспрессо</b><div style="color:#c9b8a3;margin-top:8px;">Двойной заряд · 130₽</div></div></div></div>
+<div style="padding:70px;text-align:center;background:#1a0f08;"><div style="font-size:34px;margin-bottom:20px;">Приходите на чашечку ☕</div><div style="background:#d4a05f;color:#1a0f08;padding:16px 40px;border-radius:6px;font-weight:bold;display:inline-block;">Смотреть на карте</div></div></div>`},
+
+auto:{url:"motor-service.ru",html:`
+<div style="font-family:Arial;color:#fff;background:#0e1116;">
+<div style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:70px;position:relative;overflow:hidden;">
+<div style="position:absolute;top:-80px;right:-80px;width:340px;height:340px;background:radial-gradient(circle,rgba(255,90,0,.35),transparent 70%);"></div>
+<div style="letter-spacing:3px;color:#ff5a00;margin-bottom:16px;font-weight:bold;">АВТОСЕРВИС «МОТОР»</div>
+<div style="font-size:66px;font-weight:900;line-height:1.05;margin-bottom:24px;">Ремонт без<br>развода на деньги</div>
+<div style="font-size:20px;color:#9aa4b2;max-width:500px;margin-bottom:34px;">Честная диагностика за 30 минут. Фиксированная цена до начала работ.</div>
+<div style="background:#ff5a00;color:#fff;padding:18px 44px;border-radius:8px;font-weight:bold;font-size:18px;width:fit-content;">Записаться на диагностику</div></div>
+<div style="padding:70px;background:#14181f;"><div style="font-size:40px;margin-bottom:40px;">Что делаем</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
+<div style="background:#1c222b;padding:30px;border-radius:12px;border-left:3px solid #ff5a00;"><b style="font-size:20px;">Двигатель</b><div style="color:#9aa4b2;margin-top:8px;">Диагностика и ремонт</div></div>
+<div style="background:#1c222b;padding:30px;border-radius:12px;border-left:3px solid #ff5a00;"><b style="font-size:20px;">Ходовая</b><div style="color:#9aa4b2;margin-top:8px;">Подвеска, тормоза</div></div>
+<div style="background:#1c222b;padding:30px;border-radius:12px;border-left:3px solid #ff5a00;"><b style="font-size:20px;">Электрика</b><div style="color:#9aa4b2;margin-top:8px;">Любая сложность</div></div></div></div>
+<div style="padding:70px;text-align:center;"><div style="font-size:34px;margin-bottom:20px;">Запишись сегодня — скидка 15%</div><div style="background:#ff5a00;padding:16px 40px;border-radius:8px;font-weight:bold;display:inline-block;">Позвонить мастеру</div></div></div>`},
+
+beauty:{url:"estetika-studio.ru",html:`
+<div style="font-family:Helvetica;color:#2a1a22;background:#fff;">
+<div style="min-height:100vh;background:linear-gradient(135deg,#f8e8ee,#fff);display:flex;flex-direction:column;justify-content:center;padding:70px;">
+<div style="letter-spacing:5px;color:#c2708f;margin-bottom:18px;">BEAUTY STUDIO</div>
+<div style="font-size:66px;font-weight:300;line-height:1.05;margin-bottom:24px;">Ваша <span style="font-weight:700;color:#c2708f;">эстетика</span></div>
+<div style="font-size:20px;color:#7a6670;max-width:480px;margin-bottom:34px;">Маникюр, брови, макияж. Онлайн-запись за 1 клик.</div>
+<div style="background:#c2708f;color:#fff;padding:18px 44px;border-radius:40px;font-weight:600;font-size:18px;width:fit-content;">Записаться онлайн</div></div>
+<div style="padding:70px;"><div style="font-size:40px;color:#c2708f;margin-bottom:40px;">Услуги</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+<div style="background:#faf0f4;padding:30px;border-radius:16px;"><b style="font-size:22px;">Маникюр</b><div style="color:#7a6670;margin-top:8px;">от 1500₽</div></div>
+<div style="background:#faf0f4;padding:30px;border-radius:16px;"><b style="font-size:22px;">Брови</b><div style="color:#7a6670;margin-top:8px;">от 1200₽</div></div>
+<div style="background:#faf0f4;padding:30px;border-radius:16px;"><b style="font-size:22px;">Макияж</b><div style="color:#7a6670;margin-top:8px;">от 2500₽</div></div>
+<div style="background:#faf0f4;padding:30px;border-radius:16px;"><b style="font-size:22px;">Ресницы</b><div style="color:#7a6670;margin-top:8px;">от 2000₽</div></div></div></div>
+<div style="padding:70px;text-align:center;background:#f8e8ee;"><div style="font-size:32px;margin-bottom:20px;color:#2a1a22;">Первый визит — скидка 20%</div><div style="background:#c2708f;color:#fff;padding:16px 40px;border-radius:40px;font-weight:600;display:inline-block;">Выбрать время</div></div></div>`},
+
+food:{url:"sytiy-delivery.ru",html:`
+<div style="font-family:Arial;color:#fff;background:#b81f1f;">
+<div style="min-height:100vh;background:linear-gradient(135deg,#e8452c,#b81f1f);display:flex;flex-direction:column;justify-content:center;padding:70px;">
+<div style="letter-spacing:3px;margin-bottom:16px;opacity:.85;">🍔 FAST FOOD · 24/7</div>
+<div style="font-size:66px;font-weight:900;line-height:1;margin-bottom:24px;">Голоден?<br>30 минут — и готово</div>
+<div style="font-size:20px;opacity:.9;max-width:500px;margin-bottom:34px;">Доставка по городу. Бесплатно от 700₽.</div>
+<div style="background:#fff;color:#b81f1f;padding:18px 44px;border-radius:8px;font-weight:bold;font-size:18px;width:fit-content;">Смотреть меню →</div></div>
+<div style="padding:70px;background:#a01818;"><div style="font-size:40px;margin-bottom:40px;">Хиты меню</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
+<div style="background:#c62222;padding:30px;border-radius:12px;"><b style="font-size:22px;">🍔 Бургер</b><div style="opacity:.85;margin-top:8px;">от 320₽</div></div>
+<div style="background:#c62222;padding:30px;border-radius:12px;"><b style="font-size:22px;">🍕 Пицца</b><div style="opacity:.85;margin-top:8px;">от 480₽</div></div>
+<div style="background:#c62222;padding:30px;border-radius:12px;"><b style="font-size:22px;">🌯 Шаурма</b><div style="opacity:.85;margin-top:8px;">от 260₽</div></div></div></div>
+<div style="padding:70px;text-align:center;background:#b81f1f;"><div style="font-size:34px;margin-bottom:20px;">Первый заказ — напиток в подарок 🥤</div><div style="background:#fff;color:#b81f1f;padding:16px 40px;border-radius:8px;font-weight:bold;display:inline-block;">Заказать сейчас</div></div></div>`},
+
+fit:{url:"forma-club.ru",html:`
+<div style="font-family:Arial;color:#fff;background:#0a0e14;">
+<div style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:70px;position:relative;overflow:hidden;">
+<div style="position:absolute;bottom:-80px;left:-60px;width:340px;height:340px;background:radial-gradient(circle,rgba(0,230,150,.3),transparent 70%);"></div>
+<div style="letter-spacing:4px;color:#00e696;margin-bottom:14px;font-weight:bold;">FITNESS CLUB</div>
+<div style="font-size:70px;font-weight:900;line-height:1;margin-bottom:24px;">Стань<br>сильнее</div>
+<div style="font-size:20px;color:#9aa4b2;max-width:480px;margin-bottom:34px;">Первая тренировка — бесплатно. Тренеры, зал, бассейн.</div>
+<div style="background:#00e696;color:#0a0e14;padding:18px 44px;border-radius:8px;font-weight:bold;font-size:18px;width:fit-content;">Записаться бесплатно</div></div>
+<div style="padding:70px;background:#0e141c;"><div style="font-size:40px;margin-bottom:40px;">Абонементы</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
+<div style="background:#141c26;padding:34px;border-radius:14px;"><b style="font-size:22px;">Месяц</b><div style="color:#00e696;font-size:28px;margin-top:10px;">2 900₽</div></div>
+<div style="background:#141c26;padding:34px;border-radius:14px;border:2px solid #00e696;"><b style="font-size:22px;">Полгода</b><div style="color:#00e696;font-size:28px;margin-top:10px;">12 900₽</div></div>
+<div style="background:#141c26;padding:34px;border-radius:14px;"><b style="font-size:22px;">Год</b><div style="color:#00e696;font-size:28px;margin-top:10px;">19 900₽</div></div></div></div>
+<div style="padding:70px;text-align:center;"><div style="font-size:34px;margin-bottom:20px;">Приведи друга — месяц в подарок 💪</div><div style="background:#00e696;color:#0a0e14;padding:16px 40px;border-radius:8px;font-weight:bold;display:inline-block;">Начать тренировки</div></div></div>`},
+
+dent:{url:"dental-clinic.ru",html:`
+<div style="font-family:Arial;color:#0d2438;background:#fff;">
+<div style="min-height:100vh;background:linear-gradient(135deg,#eaf4ff,#fff);display:flex;flex-direction:column;justify-content:center;padding:70px;">
+<div style="letter-spacing:4px;color:#2b8fe0;margin-bottom:14px;font-weight:bold;">DENTAL CLINIC</div>
+<div style="font-size:62px;font-weight:800;line-height:1.05;margin-bottom:24px;">Здоровая улыбка<br>без страха</div>
+<div style="font-size:20px;color:#5a7284;max-width:500px;margin-bottom:34px;">Осмотр и консультация — 0₽. Современное оборудование, опытные врачи.</div>
+<div style="background:#2b8fe0;color:#fff;padding:18px 44px;border-radius:8px;font-weight:bold;font-size:18px;width:fit-content;">Записаться на приём</div></div>
+<div style="padding:70px;"><div style="font-size:40px;color:#2b8fe0;margin-bottom:40px;">Услуги</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+<div style="background:#f0f7ff;padding:30px;border-radius:14px;"><b style="font-size:22px;">Лечение кариеса</b><div style="color:#5a7284;margin-top:8px;">от 2500₽</div></div>
+<div style="background:#f0f7ff;padding:30px;border-radius:14px;"><b style="font-size:22px;">Отбеливание</b><div style="color:#5a7284;margin-top:8px;">от 6000₽</div></div>
+<div style="background:#f0f7ff;padding:30px;border-radius:14px;"><b style="font-size:22px;">Имплантация</b><div style="color:#5a7284;margin-top:8px;">от 25000₽</div></div>
+<div style="background:#f0f7ff;padding:30px;border-radius:14px;"><b style="font-size:22px;">Гигиена</b><div style="color:#5a7284;margin-top:8px;">от 3500₽</div></div></div></div>
+<div style="padding:70px;text-align:center;background:#eaf4ff;"><div style="font-size:32px;margin-bottom:20px;">Запишись онлайн — без очередей 🦷</div><div style="background:#2b8fe0;color:#fff;padding:16px 40px;border-radius:8px;font-weight:bold;display:inline-block;">Выбрать время</div></div></div>`}
+};
+
+function openSite(key){
+  const s = SITES[key];
+  document.getElementById('modalUrl').textContent = s.url;
+  document.getElementById('modalFrame').srcdoc = s.html;
+  document.getElementById('siteModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSite(){
+  document.getElementById('siteModal').classList.remove('open');
+  document.getElementById('modalFrame').srcdoc = '';
+  document.body.style.overflow = '';
+}
+// закрытие по клику на тёмный фон
+document.getElementById('siteModal').addEventListener('click',function(e){
+  if(e.target === this) closeSite();
+});
+// закрытие по Esc
+document.addEventListener('keydown',function(e){
+  if(e.key === 'Escape') closeSite();
+});
+</script>
+
+<body>
+
+<header>
+  <nav>
+    <div class="logo">Нарэк <em>Карапетян</em></div>
+    <a class="btn btn-primary" href="#contact">Написать →</a>
+  </nav>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item hi">Tilda</span>
+    <span class="marquee-item">Яндекс Директ</span>
+    <span class="marquee-item hi">AI-баннеры</span>
+    <span class="marquee-item">AI-видео</span>
+    <span class="marquee-item hi">Заявки, а не просмотры</span>
+    <span class="marquee-item">Маркетинг</span>
+    <span class="marquee-item hi">Tilda</span>
+    <span class="marquee-item">Яндекс Директ</span>
+    <span class="marquee-item hi">AI-баннеры</span>
+    <span class="marquee-item">AI-видео</span>
+    <span class="marquee-item hi">Заявки, а не просмотры</span>
+    <span class="marquee-item">Маркетинг</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-glow2" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-badge">
+      <span class="tag accent">⚡ Маркетолог · Личный бренд</span>
+    </div>
+    <h1>Сайт и <span class="hi">реклама</span><br>за один спринт</h1>
+    <p class="hero-lead">Делаю сайты на Tilda, настраиваю Яндекс Директ и создаю AI-баннеры и видео — чтобы бизнес был виден и приносил заявки, а не просто существовал в интернете.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#contact">Обсудить проект</a>
+      <a class="btn btn-ghost" href="#services">Что входит</a>
+    </div>
+    <div class="hero-cards">
+      <div class="hero-card reveal" style="transition-delay:.1s">
+        <div class="icon">🏗</div>
+        <h3>Сайты на Tilda</h3>
+        <p>С нуля под ваш продукт, адаптивно, с формами и аналитикой</p>
+      </div>
+      <div class="hero-card reveal" style="transition-delay:.22s">
+        <div class="icon">🎯</div>
+        <h3>Яндекс Директ</h3>
+        <p>Семантика, объявления, ставки, ведение кампании</p>
+      </div>
+      <div class="hero-card reveal" style="transition-delay:.34s">
+        <div class="icon">✨</div>
+        <h3>AI-креативы</h3>
+        <p>Баннеры и короткие видео без съёмочной группы</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span class="tag">Услуги</span></div>
+      <h2>Три блока, из которых<br>складывается запуск</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service reveal" style="transition-delay:.05s">
+        <span class="s-num">01 — Сайт</span>
+        <h3>Сайт на Tilda</h3>
+        <p>Одностраничник или многостраничный сайт: структура, тексты, адаптация, форма заявки и аналитика с первого дня.</p>
+      </div>
+      <div class="service reveal" style="transition-delay:.18s">
+        <span class="s-num">02 — Реклама</span>
+        <h3>Настройка Яндекс Директа</h3>
+        <p>Сбор семантики, объявления, ставки и минус-слова, разметка целей. Веду кампанию и показываю, откуда приходят заявки.</p>
+      </div>
+      <div class="service reveal" style="transition-delay:.30s">
+        <span class="s-num">03 — Креатив</span>
+        <h3>AI-баннеры и видео</h3>
+        <p>Рекламные баннеры и короткие ролики с помощью нейросетей — быстро и без съёмочной группы.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="process">
+      <div class="section-head">
+        <div class="section-label"><span class="tag">Процесс</span></div>
+        <h2>От брифа до первых заявок</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal" style="transition-delay:.05s">
+          <div class="num">01</div>
+          <h3>Бриф</h3>
+          <p>Обсуждаем продукт, аудиторию и цель. 20–30 минут созвона.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:.15s">
+          <div class="num">02</div>
+          <h3>Сайт</h3>
+          <p>Собираю структуру и дизайн на Tilda, согласуем правки.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:.25s">
+          <div class="num">03</div>
+          <h3>Реклама и креативы</h3>
+          <p>Настраиваю Директ, делаю AI-баннеры и видео.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:.35s">
+          <div class="num">04</div>
+          <h3>Запуск</h3>
+          <p>Включаем, смотрим первые заявки, докручиваем.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span class="tag">Пакеты</span></div>
+      <h2>Можно взять всё<br>или по частям</h2>
+    </div>
+    <div class="pack-grid">
+      <div class="pack reveal" style="transition-delay:.05s">
+        <h3>Сайт</h3>
+        <div class="price">от 25 000 ₽</div>
+        <div class="pack-divider"></div>
+        <ul>
+          <li>Сайт на Tilda до 5 экранов</li>
+          <li>Адаптация под мобильные</li>
+          <li>Форма заявки + аналитика</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact">Заказать</a>
+      </div>
+      <div class="pack featured reveal" style="transition-delay:.18s">
+        <span class="featured-badge">Популярный</span>
+        <h3>Сайт + реклама</h3>
+        <div class="price">от 45 000 ₽</div>
+        <div class="pack-divider"></div>
+        <ul>
+          <li>Всё из пакета «Сайт»</li>
+          <li>Настройка Яндекс Директа</li>
+          <li>Ведение первые 2 недели</li>
+        </ul>
+        <a class="btn btn-primary" href="#contact">Заказать</a>
+      </div>
+      <div class="pack reveal" style="transition-delay:.30s">
+        <h3>Полный запуск</h3>
+        <div class="price">от 65 000 ₽</div>
+        <div class="pack-divider"></div>
+        <ul>
+          <li>Всё из «Сайт + реклама»</li>
+          <li>Набор AI-баннеров</li>
+          <li>2–3 коротких AI-видео</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact">Заказать</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="wrap">
+    <div class="section-head" style="text-align:center;max-width:100%;">
+      <div class="section-label" style="justify-content:center;"><span class="tag">Квиз</span></div>
+      <h2>Не знаете, что выбрать?<br>30 секунд — и готово</h2>
+    </div>
+    <div class="quiz-wrap" id="quizCard">
+      <div class="quiz-progress" aria-hidden="true">
+        <span class="dot active" data-dot="0"></span>
+        <span class="dot" data-dot="1"></span>
+        <span class="dot" data-dot="2"></span>
+        <span class="dot" data-dot="3"></span>
+      </div>
+
+      <div class="quiz-step" data-step="0">
+        <p class="quiz-q">Что уже есть у вашего бизнеса?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" data-q="1" data-v="0" type="button">Ничего — начинаем с нуля</button>
+          <button class="quiz-opt" data-q="1" data-v="1" type="button">Есть сайт, но нет рекламы</button>
+          <button class="quiz-opt" data-q="1" data-v="2" type="button">Есть сайт и реклама, нужны новые креативы</button>
+        </div>
+      </div>
+
+      <div class="quiz-step" data-step="1" hidden>
+        <p class="quiz-q">Какая главная цель сейчас?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" data-q="2" data-v="0" type="button">Получить первые заявки</button>
+          <button class="quiz-opt" data-q="2" data-v="1" type="button">Увеличить число заявок</button>
+          <button class="quiz-opt" data-q="2" data-v="2" type="button">Обновить рекламные материалы</button>
+        </div>
+      </div>
+
+      <div class="quiz-step" data-step="2" hidden>
+        <p class="quiz-q">Какой бюджет на старт?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" data-q="3" data-v="0" type="button">До 30 000 ₽</button>
+          <button class="quiz-opt" data-q="3" data-v="1" type="button">30 000 – 60 000 ₽</button>
+          <button class="quiz-opt" data-q="3" data-v="2" type="button">Больше 60 000 ₽</button>
+        </div>
+      </div>
+
+      <div class="quiz-step quiz-result" data-step="3" hidden>
+        <span class="res-eyebrow">Вам подойдёт</span>
+        <h3 id="resultTitle">—</h3>
+        <p id="resultText">—</p>
+        <div class="quiz-cta">
+          <a class="btn btn-primary" href="#contact">Обсудить проект →</a>
+          <button id="quizRestart" type="button">Пройти заново</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span class="tag">Портфолио</span></div>
+      <h2>Сайты,<br>которые продают</h2>
+      <p>Концепты для разных ниш — показывают мой стиль. Нажмите на карточку, чтобы открыть сайт целиком.</p>
+    </div>
+    <div class="portfolio-grid">
+
+      <!-- 1 КОФЕЙНЯ -->
+      <div class="port-card reveal" onclick="openSite('coffee')">
+        <div class="port-screen">
+          <div class="port-open-btn"><span>Открыть сайт →</span></div>
+          <iframe scrolling="no" srcdoc='<div style="font-family:Georgia,serif;height:100%;background:linear-gradient(135deg,#3a2618,#1a0f08);color:#f5e6d3;display:flex;flex-direction:column;justify-content:center;padding:50px;"><div style="font-size:13px;letter-spacing:4px;color:#d4a05f;margin-bottom:16px;">COFFEE · ROSTOV</div><div style="font-size:52px;font-weight:bold;line-height:1;margin-bottom:16px;">Аромат,<br>который будит</div><div style="font-size:17px;color:#c9b8a3;margin-bottom:28px;">Свежая обжарка каждое утро.</div><div style="background:#d4a05f;color:#1a0f08;padding:14px 32px;border-radius:6px;font-weight:bold;width:fit-content;">Заказать кофе</div></div>'></iframe>
+        </div>
+        <div class="port-info"><span class="port-tag">Кофейня · Tilda</span><h3>«Аромат»</h3><p>Лендинг + предзаказ онлайн</p></div>
+      </div>
+
+      <!-- 2 АВТОСЕРВИС -->
+      <div class="port-card reveal" onclick="openSite('auto')">
+        <div class="port-screen">
+          <div class="port-open-btn"><span>Открыть сайт →</span></div>
+          <iframe scrolling="no" srcdoc='<div style="font-family:Arial;height:100%;background:#0e1116;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:50px;position:relative;overflow:hidden;"><div style="position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(255,90,0,.35),transparent 70%);"></div><div style="font-size:13px;letter-spacing:3px;color:#ff5a00;margin-bottom:14px;font-weight:bold;">АВТОСЕРВИС «МОТОР»</div><div style="font-size:50px;font-weight:900;line-height:1.05;margin-bottom:16px;">Ремонт без<br>развода</div><div style="font-size:16px;color:#9aa4b2;margin-bottom:26px;">Честная диагностика за 30 минут.</div><div style="background:#ff5a00;color:#fff;padding:14px 34px;border-radius:8px;font-weight:bold;width:fit-content;">Записаться</div></div>'></iframe>
+        </div>
+        <div class="port-info"><span class="port-tag">Автосервис · Директ</span><h3>«Мотор»</h3><p>Сайт + реклама на записи</p></div>
+      </div>
+
+      <!-- 3 САЛОН КРАСОТЫ -->
+      <div class="port-card reveal" onclick="openSite('beauty')">
+        <div class="port-screen">
+          <div class="port-open-btn"><span>Открыть сайт →</span></div>
+          <iframe scrolling="no" srcdoc='<div style="font-family:Helvetica;height:100%;background:linear-gradient(135deg,#f8e8ee,#fff);color:#2a1a22;display:flex;flex-direction:column;justify-content:center;padding:50px;"><div style="font-size:12px;letter-spacing:5px;color:#c2708f;margin-bottom:14px;">BEAUTY STUDIO</div><div style="font-size:50px;font-weight:300;line-height:1.05;margin-bottom:16px;">Ваша <span style="font-weight:700;color:#c2708f;">эстетика</span></div><div style="font-size:16px;color:#7a6670;margin-bottom:26px;">Маникюр, брови, макияж.</div><div style="background:#c2708f;color:#fff;padding:14px 34px;border-radius:40px;font-weight:600;width:fit-content;">Записаться онлайн</div></div>'></iframe>
+        </div>
+        <div class="port-info"><span class="port-tag">Салон красоты · Tilda</span><h3>«Эстетика»</h3><p>Лендинг + онлайн-запись</p></div>
+      </div>
+
+      <!-- 4 ДОСТАВКА ЕДЫ -->
+      <div class="port-card reveal" onclick="openSite('food')">
+        <div class="port-screen">
+          <div class="port-open-btn"><span>Открыть сайт →</span></div>
+          <iframe scrolling="no" srcdoc='<div style="font-family:Arial;height:100%;background:linear-gradient(135deg,#e8452c,#b81f1f);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:50px;"><div style="font-size:13px;letter-spacing:3px;margin-bottom:14px;opacity:.85;">🍔 FAST FOOD · 24/7</div><div style="font-size:52px;font-weight:900;line-height:1;margin-bottom:16px;">Голоден?<br>30 минут —<br>и готово</div><div style="font-size:16px;opacity:.9;margin-bottom:26px;">Доставка по городу. Бесплатно от 700₽.</div><div style="background:#fff;color:#b81f1f;padding:14px 34px;border-radius:8px;font-weight:bold;width:fit-content;">Смотреть меню</div></div>'></iframe>
+        </div>
+        <div class="port-info"><span class="port-tag">Доставка еды · Директ</span><h3>«Сытый»</h3><p>Сайт-меню + заказ онлайн</p></div>
+      </div>
+
+      <!-- 5 ФИТНЕС -->
+      <div class="port-card reveal" onclick="openSite('fit')">
+        <div class="port-screen">
+          <div class="port-open-btn"><span>Открыть сайт →</span></div>
+          <iframe scrolling="no" srcdoc='<div style="font-family:Arial;height:100%;background:#0a0e14;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:50px;position:relative;overflow:hidden;"><div style="position:absolute;bottom:-60px;left:-40px;width:260px;height:260px;background:radial-gradient(circle,rgba(0,230,150,.3),transparent 70%);"></div><div style="font-size:13px;letter-spacing:4px;color:#00e696;margin-bottom:14px;font-weight:bold;">FITNESS CLUB</div><div style="font-size:52px;font-weight:900;line-height:1;margin-bottom:16px;">Стань<br>сильнее</div><div style="font-size:16px;color:#9aa4b2;margin-bottom:26px;">Первая тренировка — бесплатно.</div><div style="background:#00e696;color:#0a0e14;padding:14px 34px;border-radius:8px;font-weight:bold;width:fit-content;">Записаться бесплатно</div></div>'></iframe>
+        </div>
+        <div class="port-info"><span class="port-tag">Фитнес · Tilda + AI-видео</span><h3>«Форма»</h3><p>Лендинг + запись на пробную</p></div>
+      </div>
+
+      <!-- 6 СТОМАТОЛОГИЯ -->
+      <div class="port-card reveal" onclick="openSite('dent')">
+        <div class="port-screen">
+          <div class="port-open-btn"><span>Открыть сайт →</span></div>
+          <iframe scrolling="no" srcdoc='<div style="font-family:Arial;height:100%;background:linear-gradient(135deg,#eaf4ff,#fff);color:#0d2438;display:flex;flex-direction:column;justify-content:center;padding:50px;"><div style="font-size:12px;letter-spacing:4px;color:#2b8fe0;margin-bottom:14px;font-weight:bold;">DENTAL CLINIC</div><div style="font-size:48px;font-weight:800;line-height:1.05;margin-bottom:16px;">Здоровая<br>улыбка<br>без страха</div><div style="font-size:16px;color:#5a7284;margin-bottom:26px;">Осмотр и консультация — 0₽.</div><div style="background:#2b8fe0;color:#fff;padding:14px 34px;border-radius:8px;font-weight:bold;width:fit-content;">Записаться на приём</div></div>'></iframe>
+        </div>
+        <div class="port-info"><span class="port-tag">Стоматология · Директ</span><h3>«Дентал»</h3><p>Сайт + реклама на записи</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
+<div class="modal" id="siteModal">
+  <div class="modal-box">
+    <div class="modal-bar">
+      <div class="dot" style="background:#e5484d"></div>
+      <div class="dot" style="background:#f5a623"></div>
+      <div class="dot" style="background:#2ecc71"></div>
+      <div class="url" id="modalUrl">example.ru</div>
+      <button class="modal-close" onclick="closeSite()">✕</button>
+    </div>
+    <iframe class="modal-frame" id="modalFrame" srcdoc=""></iframe>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-card reveal-left">
+      <img class="avatar" src="data:image/jpeg;base64,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" alt="Нарэк Карапетян">
+      <h3>Нарэк Карапетян</h3>
+      <p class="role">Маркетолог · Малый бизнес</p>
+      <div class="about-skills">
+        <span class="tag">Tilda</span>
+        <span class="tag">Яндекс Директ</span>
+        <span class="tag">AI-креативы</span>
+      </div>
+    </div>
+    <div class="about-text reveal" style="transition-delay:.15s">
+      <div class="section-label" style="margin-bottom:16px;"><span class="tag">Обо мне</span></div>
+      <p>Начинал с ведения соцсетей для знакомых и постепенно перешёл в сайты и рекламу — потому что заметил: красивая страница без рекламы не работает, а реклама без нормального сайта сливает бюджет.</p>
+      <p>Сейчас помогаю небольшим бизнесам выйти в онлайн и получать заявки уже в первые недели после запуска. Работаю с Tilda, Яндекс Директом и нейросетями для создания рекламных материалов.</p>
+      <div class="about-stats">
+        <div class="stat-card"><b style="color:var(--flame)">Tilda</b><span>Сайты</span></div>
+        <div class="stat-card"><b style="color:var(--amber)">Директ</b><span>Реклама</span></div>
+        <div class="stat-card"><b style="color:var(--teal)">AI</b><span>Креативы</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-inner">
+      <div class="contact-text">
+        <span class="tag accent">Связаться</span>
+        <h2>Обсудим ваш проект?</h2>
+        <p>Расскажите пару слов о бизнесе — отвечу и предложу, с чего начать.</p>
+      </div>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="https://t.me/Karapetyan_Narek_Official" target="_blank" rel="noopener">Telegram →</a>
+        <a class="btn btn-ghost" href="mailto:karapetyan.narek1993@gmail.com">Email</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Нарэк Карапетян — <a href="https://t.me/Karapetyan_Narek_Official" style="color:var(--flame)">@Karapetyan_Narek_Official</a> · <a href="mailto:karapetyan.narek1993@gmail.com" style="color:var(--muted)">karapetyan.narek1993@gmail.com</a></footer>
+
+<script>
+// Scroll reveal
+(function(){
+  var els = document.querySelectorAll('.reveal, .reveal-left');
+  if(!els.length) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  },{threshold:0.12});
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+(function(){
+  var steps = document.querySelectorAll('.quiz-step');
+  var dots = document.querySelectorAll('.quiz-progress .dot');
+  var answers = {};
+  var packages = {
+    site:{ title:'Пакет «Сайт» — от 25 000 ₽', text:'Стартуйте с сайта на Tilda — быстро выйти в интернет и начать собирать первые обращения.' },
+    ads:{ title:'Пакет «Сайт + реклама» — от 45 000 ₽', text:'Сайт и настройка Яндекс Директа — чтобы заявки пошли уже в первые недели.' },
+    full:{ title:'«Полный запуск» — от 65 000 ₽', text:'Сайт, реклама и AI-баннеры с видео — весь комплект без лишней головной боли.' }
+  };
+  function showStep(i){
+    steps.forEach(function(s){ s.hidden = parseInt(s.dataset.step)!==i; });
+    dots.forEach(function(d){ d.classList.toggle('active', parseInt(d.dataset.dot)<=i); });
+  }
+  function result(){
+    var a1=answers['1'], a3=answers['3'];
+    var key = a1===2 ? 'full' : a1===1 ? (a3===2?'full':'ads') : (a3===0?'site':a3===1?'ads':'full');
+    document.getElementById('resultTitle').textContent = packages[key].title;
+    document.getElementById('resultText').textContent = packages[key].text;
+  }
+  document.querySelectorAll('.quiz-opt').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      answers[btn.dataset.q] = parseInt(btn.dataset.v);
+      var next = parseInt(btn.dataset.q);
+      if(next<3){ showStep(next); } else { result(); showStep(3); }
+    });
+  });
+  document.getElementById('quizRestart').addEventListener('click', function(){ answers={}; showStep(0); });
+  showStep(0);
+})();
+</script>
+</body>
+</html>
