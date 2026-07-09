@@ -394,6 +394,88 @@
   width:30px; height:30px; border-radius:50%; font-size:16px; line-height:1;
 }
 .modal-frame{ width:100%; height:calc(88vh - 46px); border:none; background:#fff; }
+
+.pricing {
+  padding: 60px 20px;
+  text-align: center;
+  font-family: sans-serif;
+}
+.pricing__title {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+.pricing__subtitle {
+  color: #ff6b00;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+.pricing__grid {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.price-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 32px 24px;
+  width: 280px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  position: relative;
+  text-align: left;
+}
+.price-card--popular {
+  border: 2px solid #ff6b00;
+  transform: scale(1.03);
+}
+.price-card__badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff6b00;
+  color: #fff;
+  font-size: 13px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.price-card h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.price-card__price {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ff6b00;
+  margin-bottom: 20px;
+}
+.price-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+}
+.price-card ul li {
+  margin-bottom: 10px;
+  color: #444;
+}
+.price-card__btn {
+  display: block;
+  text-align: center;
+  background: #ff6b00;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+.price-card__btn:hover {
+  background: #e85f00;
+}
 </style>
 </head>
 <script>
@@ -632,48 +714,46 @@ document.addEventListener('keydown',function(e){
   </div>
 </section>
 
-<section id="pricing">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="section-label"><span class="tag">Пакеты</span></div>
-      <h2>Можно взять всё<br>или по частям</h2>
+<section class="pricing">
+  <h2 class="pricing__title">Услуги и цены</h2>
+  <p class="pricing__subtitle">🔥 Стартовые цены для первых клиентов. Дальше дороже.</p>
+
+  <div class="pricing__grid">
+
+    <div class="price-card">
+      <h3>Сайт-визитка</h3>
+      <p class="price-card__price">от 8 000 ₽</p>
+      <ul>
+        <li>✅ Сайт на Tilda</li>
+        <li>✅ Адаптация под телефон</li>
+        <li>✅ Форма заявки</li>
+      </ul>
+      <a href="https://t.me/Karapetyan_Narek_Official" class="price-card__btn">Обсудить проект</a>
     </div>
-    <div class="pack-grid">
-      <div class="pack reveal" style="transition-delay:.05s">
-        <h3>Сайт</h3>
-        <div class="price">от 25 000 ₽</div>
-        <div class="pack-divider"></div>
-        <ul>
-          <li>Сайт на Tilda до 5 экранов</li>
-          <li>Адаптация под мобильные</li>
-          <li>Форма заявки + аналитика</li>
-        </ul>
-        <a class="btn btn-ghost" href="#contact">Заказать</a>
-      </div>
-      <div class="pack featured reveal" style="transition-delay:.18s">
-        <span class="featured-badge">Популярный</span>
-        <h3>Сайт + реклама</h3>
-        <div class="price">от 45 000 ₽</div>
-        <div class="pack-divider"></div>
-        <ul>
-          <li>Всё из пакета «Сайт»</li>
-          <li>Настройка Яндекс Директа</li>
-          <li>Ведение первые 2 недели</li>
-        </ul>
-        <a class="btn btn-primary" href="#contact">Заказать</a>
-      </div>
-      <div class="pack reveal" style="transition-delay:.30s">
-        <h3>Полный запуск</h3>
-        <div class="price">от 65 000 ₽</div>
-        <div class="pack-divider"></div>
-        <ul>
-          <li>Всё из «Сайт + реклама»</li>
-          <li>Набор AI-баннеров</li>
-          <li>2–3 коротких AI-видео</li>
-        </ul>
-        <a class="btn btn-ghost" href="#contact">Заказать</a>
-      </div>
+
+    <div class="price-card price-card--popular">
+      <span class="price-card__badge">Популярное 🔥</span>
+      <h3>Сайт + реклама</h3>
+      <p class="price-card__price">от 15 000 ₽</p>
+      <ul>
+        <li>✅ Всё из тарифа выше</li>
+        <li>✅ Настройка рекламы</li>
+        <li>✅ Подбор аудитории</li>
+      </ul>
+      <a href="https://t.me/Karapetyan_Narek_Official" class="price-card__btn">Обсудить проект</a>
     </div>
+
+    <div class="price-card">
+      <h3>Полный запуск</h3>
+      <p class="price-card__price">от 25 000 ₽</p>
+      <ul>
+        <li>✅ Всё из тарифа выше</li>
+        <li>✅ AI-баннеры</li>
+        <li>✅ Ведение до результата</li>
+      </ul>
+      <a href="https://t.me/Karapetyan_Narek_Official" class="price-card__btn">Обсудить проект</a>
+    </div>
+
   </div>
 </section>
 
