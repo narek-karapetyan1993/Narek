@@ -478,10 +478,10 @@
 }
 </style>
 </head>
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+<script type="module">
+  import { inject } from 'https://cdn.jsdelivr.net/npm/@vercel/analytics@2.0.1/dist/index.mjs';
+  inject();
 </script>
-<script defer src="/<unique-path>/script.js"></script>
 <script>
 const SITES = {
 coffee:{url:"aromat-coffee.ru",html:`
